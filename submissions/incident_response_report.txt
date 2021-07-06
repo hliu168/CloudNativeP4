@@ -1,0 +1,19 @@
+1.Incident commander name
+  Monero crypto-mining containers, specifically minergate, moneropool, and xmrpooldotnet .
+
+2.Executive summary of what happened
+  Three pods running three different crypto miners were launched.
+
+3.Summary of what was affected
+  The attacker was able to get control of the cluster and run these containers on the cluster. Attackers are after compute resources to abuse for crypto-mining.  We can see that in the last few minutes there is a significant spike in the CPU utilization for both Kubernetes and the default. This is related to the crypto miners being started. The attacker was able to execute the pods with kubectl, which means they have access to an administrative terminal and the kubeconfig file. Or maybe they have taken over the UI and were able to run this from the UI.
+
+4.Summary of the impact
+  The attacker managed to run crypto miners on our system, which is undesirable. Usually, crypto-mining consumes a lot of CPU. 
+
+5.Summary of the remediation steps
+  The administrator can run the following command to evict the pods:
+  kubectl --kubeconfig kube_config_cluster.yml delete pod <pod_name> --grace-period=0 --force
+
+6.Summary of lessons learned
+  It is good to have monitoring like the dashboards we use. It would be helpful to have alerts from Falco in Grafana for events like this.
+
