@@ -1,0 +1,12 @@
+1.Test Plan: The change will be tested in a non-production environment such as a test cluster on my Vagrantbox. The environment is a non-production cluster.
+
+  Our test environment mimics production environment for accurate testing.
+
+  The cluster-bound incoming traffic is often split at the load balancer in the real world. This allows change be rolled out incrementally to a percentage of traffic.
+
+  In the real world, I can direct some traffic to a test environment via load balancer configuration from the production environment. This is called canary testing.
+
+  For rollback, the cluster.yaml should be version controlled with Git so the change can be rolled back. However, as a reboot is required, it's not trivial to do quickly. Better use some strategy as blue/green deployment or rolling update for the rollback process.
+
+2.How will I ensure the changes don't negatively affect my cluster? 
+The change should be tested in a non-production cluster. Once the change is applied, I should monitor metrics using your observability and monitoring techniques like Prometheus and Grafana.

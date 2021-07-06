@@ -1,0 +1,24 @@
+image:
+  repository: falcosecurity/falco-no-driver
+
+extraInitContainers: 
+  - name: driver-loader
+    image: docker.io/falcosecurity/falco-driver-loader:latest
+    imagePullPolicy: Always
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - mountPath: /host/proc
+        name: proc-fs
+        readOnly: true
+      - mountPath: /host/boot
+        name: boot-fs
+        readOnly: true
+      - mountPath: /host/lib/modules
+        name: lib-modules
+      - mountPath: /host/usr
+        name: usr-fs
+        readOnly: true
+      - mountPath: /host/etc
+        name: etc-fs
+        readOnly: true
