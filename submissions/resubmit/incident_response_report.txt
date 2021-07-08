@@ -1,0 +1,20 @@
+1.Incident commander name
+  Robert (Haoyuan) Liu
+
+2.Executive summary of what happened
+  Three pods running three different crypto miners were launched. moneropool, minergate, and cryptonight.
+
+3.Summary of what was affected
+  The attacker was able to get control of the cluster and run these containers on the cluster. Attackers are after compute resources to abuse for crypto-mining.  We can see that in the last few minutes there is a significant spike in the CPU utilization for both Kubernetes and the default. This is related to the crypto miners being started. The attacker was able to execute the pods with kubectl, which means they have access to an administrative terminal and the kubeconfig file. Or maybe they have taken over the UI and were able to run this from the UI.
+
+4.Summary of the impact
+  The attacker managed to run crypto miners on our system, which is undesirable. Usually, crypto-mining consumes a lot of CPU. 
+
+5.Summary of the remediation steps
+  1.The administrator can run the following command to evict the pods:
+    kubectl --kubeconfig kube_config_cluster.yml delete pod <pod_name> --grace-period=0 --force
+  2.The administrator can limit access to the resources such that attacker cannot run command on the cluster.
+
+6.Summary of lessons learned
+  I was learned how to montioring the events on the grafana dashboard and make alert based on the current and previous incident.
+
