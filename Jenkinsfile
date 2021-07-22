@@ -64,7 +64,7 @@ pipeline {
                     }
                 
                 script {
-                    def ret = sh("cat package.json | jq -r 'name'", returnStdout: true)
+                    def ret = sh(script: "cat package.json | jq -r 'name'", returnStdout: true)
                     echo "${ret}"
                 }
                     // }
