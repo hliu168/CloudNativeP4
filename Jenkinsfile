@@ -5,6 +5,7 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
+        booleanParam(name: 'DEPLOY', defaultValue: true, description: '')
         extendedChoice(defaultValue: 'Lambda1,Lambda2', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: 'Lambda1,  Lambda2, Lambda3,Lambda4,Lambda5,Lambda6,Lambda7,Lambda8,Lambda9,Lambda10, Lambda11', visibleItemCount: 20)
     }
     stages {
@@ -72,6 +73,17 @@ pipeline {
                 // }
             }
         }
+        stage ("Deploying") {
+             when {
+                allOf {
+                    branch 'master'
+                    expression { DEPLOY == true }
+                }
+            }
+            steps {
+                echo 'Deploying'
+            }
+        } 
     }
     post {
         success {
