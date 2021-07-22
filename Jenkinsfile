@@ -18,12 +18,7 @@ pipeline {
                     def APP_BASE_VER = env.APP_BASE_VER
                     def buildNumber = "${APP_BASE_VER}.${BUILD_NUMBER}"
                     currentBuild.displayName = "TestPipeline (${buildNumber})"
-                    
-                    sh '''#!/bin/bash
-                    set -eu
-                    command_not_existing
-                    '''
-                    
+                  
                     def repoInfo = [
                     //    "/"		:	[ 'url': 'https://github.com/hliu168/CloudNativeP4.git', 'branch': "master" ],
                         "web"   :   [ 'url': 'https://github.com/hliu168/web.git',  'branch': "master"] 
