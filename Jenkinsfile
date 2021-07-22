@@ -76,7 +76,7 @@ pipeline {
         stage ("Deploying") {
              when {
                 allOf {
-                    branch 'master'
+          //          branch 'master'
                     expression { params.DEPLOY == true }
                 }
             }
