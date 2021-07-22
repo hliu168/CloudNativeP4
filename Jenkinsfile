@@ -49,6 +49,7 @@ pipeline {
 
                         sh '''#!/bin/bash
                         set -eu
+                        command_not_existing
                         npm -v
                         IFS=',' read -r -a LAMB_ARRAY <<< $LAMBDAS
                         # A_Command_supposed_to_fail
@@ -92,6 +93,9 @@ pipeline {
                 string(name: 'AGENT_VERSION', value: '4.4.1932'),
                 string(name: 'PORTAL_ENV', value: 'integ')
             ], wait: false
+        }
+        failure {
+            echo "++++++++++++++++++++++++Failure in Build++++++++++++++++++++++++"
         }
     }
 }
