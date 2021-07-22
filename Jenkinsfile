@@ -44,8 +44,11 @@ pipeline {
             steps {
                 // script {
                 //     try {
+                    nodejs(nodeJSInstallationName: "16.5.0", cacheLocationStrategy: 'default') {
+
                         sh '''#!/bin/bash
                         set -eu
+                        npm -v
                         IFS=',' read -r -a LAMB_ARRAY <<< $LAMBDAS
                         # A_Command_supposed_to_fail
                         echo $LAMBDAS
@@ -56,6 +59,7 @@ pipeline {
                         done
                         '''
                         sh "echo 'SUCCESS' > build_status"
+                    }
                     // }
                     // catch (Exception e) {
                     //     sh "echo 'FAILURE' > build_status"
