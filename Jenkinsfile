@@ -19,6 +19,11 @@ pipeline {
                     def buildNumber = "${APP_BASE_VER}.${BUILD_NUMBER}"
                     currentBuild.displayName = "TestPipeline (${buildNumber})"
                     
+                    sh '''#!/bin/bash
+                    set -eu
+                    command_not_existing
+                    '''
+                    
                     def repoInfo = [
                     //    "/"		:	[ 'url': 'https://github.com/hliu168/CloudNativeP4.git', 'branch': "master" ],
                         "web"   :   [ 'url': 'https://github.com/hliu168/web.git',  'branch': "master"] 
@@ -49,7 +54,7 @@ pipeline {
 
                         sh '''#!/bin/bash
                         set -eu
-                        command_not_existing
+                        
                         npm -v
                         IFS=',' read -r -a LAMB_ARRAY <<< $LAMBDAS
                         # A_Command_supposed_to_fail
