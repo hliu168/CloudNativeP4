@@ -44,7 +44,7 @@ pipeline {
             steps {
                 // script {
                 //     try {
-                    nodejs(nodeJSInstallationName: "16.5.0", cacheLocationStrategy: default) {
+                    nodejs(nodeJSInstallationName: "16.5.0", cacheLocationStrategy: default()) {
 
                         sh '''#!/bin/bash
                         set -eu
