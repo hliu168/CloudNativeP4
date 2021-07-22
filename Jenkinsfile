@@ -93,6 +93,12 @@ pipeline {
     }
     post {
         success {
+            script {
+                def lambdas = "${LAMBDAS}".split(",")
+                lambdas.each {l->
+                    echo "$l"
+                }
+            }
             build job: 'DownStreamJob', parameters: [
                 string(name: 'BRANCH_PORTAL_CLIENT', value: 'origin/integration'),
                 string(name: 'AGENT_VERSION', value: '4.4.1932'),
