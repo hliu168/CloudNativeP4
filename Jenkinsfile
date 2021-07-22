@@ -62,6 +62,11 @@ pipeline {
                         '''
                         sh "echo 'SUCCESS' > build_status"
                     }
+                
+                script {
+                    def ret = sh("cat package.json | jq -r 'name'", returnStdout: true)
+                    echo "${ret}"
+                }
                     // }
                     // catch (Exception e) {
                     //     sh "echo 'FAILURE' > build_status"
