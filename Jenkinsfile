@@ -107,9 +107,10 @@ pipeline {
                 echo "$artifactString"
 
                 build job: 'DownStreamJob', parameters: [
-                    string(name: 'BRANCH_PORTAL_CLIENT', value: 'origin/integration'),
+                    string(name: 'BRANCH_PORTAL_CLIENT', value: params.BRANCH_PORTAL_CLIENT),
                     string(name: 'AGENT_VERSION', value: '4.4.1932'),
-                    string(name: 'PORTAL_ENV', value: 'integ')
+                    string(name: 'PORTAL_ENV', value: 'integ'),
+                    string(name: 'ARTIFACT_LIST', value: "$artifactString")
                 ], wait: false
             }
         }
