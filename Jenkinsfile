@@ -6,7 +6,7 @@ pipeline {
     }
     parameters {
         booleanParam(name: 'DEPLOY', defaultValue: true, description: '')
-        extendedChoice(defaultValue: 'Lambda1,Lambda2', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: 'Lambda1,  Lambda2, Lambda3,Lambda4,Lambda5,Lambda6,Lambda7,Lambda8,Lambda9,Lambda10, Lambda11', visibleItemCount: 20)
+        extendedChoice(defaultValue: 'LambdaFolder1,LambdaFolder3,LambdaFolder5,LambdaFolder7,, description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: 'LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20', visibleItemCount: 20)
     }
     stages {
         stage("Prepare Workspace") {
