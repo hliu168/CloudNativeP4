@@ -100,7 +100,7 @@ pipeline {
                     echo "$l"
                     def artifactName = sh(script: "cat $l/package.json | jq -r '.name'", returnStdout: true)
                     echo "$artifactName"
-                    artifactList.add(artifactName)
+                    artifactList.add(artifactName.trim())
                 }
                 
                 def artifactString = artifactList.join(",")
