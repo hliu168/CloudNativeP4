@@ -95,15 +95,23 @@ pipeline {
         success {
             script {
                 def lambdas = "${LAMBDAS}".split(",")
+                def artifactList = []
                 lambdas.each {l->
                     echo "$l"
+                    def artifactName = sh(script: "cat $l/package.json | jq -r '.name'", returnStdout: true)
+                    echo "$artifactName"
+                    artifactList.add(artifactName)
                 }
+                
+                def artifactString = artifactList.join(",")
+                echo "$artifactString"
+
+                build job: 'DownStreamJob', parameters: [
+                    string(name: 'BRANCH_PORTAL_CLIENT', value: 'origin/integration'),
+                    string(name: 'AGENT_VERSION', value: '4.4.1932'),
+                    string(name: 'PORTAL_ENV', value: 'integ')
+                ], wait: false
             }
-            build job: 'DownStreamJob', parameters: [
-                string(name: 'BRANCH_PORTAL_CLIENT', value: 'origin/integration'),
-                string(name: 'AGENT_VERSION', value: '4.4.1932'),
-                string(name: 'PORTAL_ENV', value: 'integ')
-            ], wait: false
         }
         failure {
             echo "++++++++++++++++++++++++Failure in Build++++++++++++++++++++++++"
