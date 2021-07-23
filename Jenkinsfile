@@ -107,6 +107,7 @@ pipeline {
                 def artifactString = artifactList.join(",")
                 echo "$artifactString"
 
+                def APP_BASE_VER = env.APP_BASE_VER
                 build job: 'DownStreamJob', parameters: [
                     string(name: 'BRANCH_PORTAL_CLIENT', value: params.BRANCH_PORTAL_CLIENT),
                     string(name: 'AGENT_VERSION', value: "${APP_BASE_VER}.${BUILD_NUMBER}"),
