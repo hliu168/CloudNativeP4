@@ -7,7 +7,7 @@ pipeline {
     parameters {
         booleanParam(name: 'DEPLOY', defaultValue: true, description: '')
         string(name: 'BRANCH_PORTAL_CLIENT', defaultValue: 'origin/integration', description: '')
-        extendedChoice(defaultValue: 'ALL', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: 'ALL,LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20', visibleItemCount: 20)
+        extendedChoice(defaultValue: '-ALL-', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: '-ALL-,LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20', visibleItemCount: 20)
     }
     stages {
         stage("Prepare Workspace") {
@@ -55,7 +55,7 @@ pipeline {
                         IFS=',' read -r -a ITEMS <<< $LAMBDAS
                         for item in ${ITEMS[@]}
                         do
-                            if [ $item == "ALL" ]
+                            if [ $item == "-ALL-" ]
                             then
                                 LAMBDAS='LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20'
                                 break
