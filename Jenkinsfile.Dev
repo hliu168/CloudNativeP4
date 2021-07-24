@@ -64,6 +64,14 @@ pipeline {
 			                        npm -v
 			                        
 			                        echo '''+lambda+'''
+			                        mkdir '''build+lambda+'''
+			                        for i in {1.200}
+			                        do
+				                        cd '''build+lambda+'''
+				                        touch '''+lambda+$i'''
+				                        cd ..
+				                    done
+			                        
 			                    '''
 							}                 		
 	                 	}
