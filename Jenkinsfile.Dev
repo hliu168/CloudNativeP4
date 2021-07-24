@@ -46,7 +46,7 @@ pipeline {
             steps {
                  script {
                  	def lambdasList = "$LAMBDAS".split(",")
-                 	lambdasList.each {item->
+                 	for (item in lambdasList) {
                  		if ("${item}" == "-ALL-") {
                  			lambdasList = 'LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20'.split(",")
                  			break
