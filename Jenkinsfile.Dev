@@ -44,49 +44,31 @@ pipeline {
         }
         stage("Build") {
             steps {
-                // script {
-                //     try {
+                 script {
+                 	LAMBDAS.each { item->
+                 		if ($item == "-ALL-") {
+                 			LAMBDAS='LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20'
+                 			break
+                 		}
+                 	}
+                 	
+                 	
                     nodejs(nodeJSInstallationName: "16.5.0") {
-
-                        sh '''#!/bin/bash
-                        set -eu
-                        
-                        npm -v
-                        IFS=',' read -r -a ITEMS <<< $LAMBDAS
-                        for item in ${ITEMS[@]}
-                        do
-                            if [ $item == "-ALL-" ]
-                            then
-                                LAMBDAS='LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20'
-                                break
-                            fi
-                        done
-                        IFS=',' read -r -a LAMB_ARRAY <<< $LAMBDAS
-                        # A_Command_supposed_to_fail
-                        echo $LAMBDAS
-                        for lambda in ${LAMB_ARRAY[@]}
-                        do
-                            # A_Command_supposed_to_fail
-                            echo $lambda
-                        done
-                        '''
-                        sh "echo 'SUCCESS' > build_status"
-                    }
-                
-                script {
-                    def ret = sh(script: "cat package.json | jq -r '.name'", returnStdout: true)
-                    echo "${ret}"
+						def steps = [:]
+	                 	LAMBDAS.each { lambda->
+							steps[lambda] = {
+								sh '''#!/bin/bash
+			                        set -eu
+			                        
+			                        npm -v
+			                        
+			                        echo '''+lambda+'''
+			                    '''
+							}                 		
+	                 	}
+	                 	parallel steps
+                    }               
                 }
-                    // }
-                    // catch (Exception e) {
-                    //     sh "echo 'FAILURE' > build_status"
-                    //     error('Build Failed' + e.toString())
-                    // }
-                    // finally {
-                    //     def data = readFile(file: 'build_status')
-                    //     echo "In finally, build status is ${data}!"
-                    // }
-                // }
             }
         }
         stage ("Deploying") {
@@ -103,7 +85,7 @@ pipeline {
     }
     post {
         success {
-            script {
+//            script {
 //                 def lambdas = "${LAMBDAS}".split(",")
 //                 def artifactList = []
 //                 lambdas.each {l->
@@ -116,14 +98,16 @@ pipeline {
 //                 def artifactString = artifactList.join(",")
 //                 echo "$artifactString"
 
-                def APP_BASE_VER = env.APP_BASE_VER
-                build job: 'DownStreamJob', parameters: [
-                    string(name: 'BRANCH_PORTAL_CLIENT', value: params.BRANCH_PORTAL_CLIENT),
-                    string(name: 'AGENT_VERSION', value: "${APP_BASE_VER}.${BUILD_NUMBER}"),
-                    string(name: 'PORTAL_ENV', value: 'integ'),
-                    string(name: 'ARTIFACT_LIST', value: "$LAMBDAS")
-                ], wait: false
-            }
+//                def APP_BASE_VER = env.APP_BASE_VER
+//                build job: 'DownStreamJob', parameters: [
+//                   string(name: 'BRANCH_PORTAL_CLIENT', value: params.BRANCH_PORTAL_CLIENT),
+//                    string(name: 'AGENT_VERSION', value: "${APP_BASE_VER}.${BUILD_NUMBER}"),
+//                    string(name: 'PORTAL_ENV', value: 'integ'),
+//                    string(name: 'ARTIFACT_LIST', value: "$LAMBDAS")
+//                ], wait: false
+				
+//            }
+	            echo "++++++++++++++++++++++++Success in Build++++++++++++++++++++++++"
         }
         failure {
             echo "++++++++++++++++++++++++Failure in Build++++++++++++++++++++++++"
