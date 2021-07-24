@@ -82,6 +82,7 @@ pipeline {
                     		set -euo pipefail
                     		cd build''' +lambda+ '''
                     		pwd
+                    		ls -l | wc -l
                     		ls -altrh
                     		cd ..
                     	'''
