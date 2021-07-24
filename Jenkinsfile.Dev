@@ -64,9 +64,9 @@ pipeline {
 			                        npm -v
 			                        
 			                        echo ''' +lambda+ '''
+		                        	mkdir build''' +lambda+ '''
 			                        for i in {1..200}
 			                        do
-			                        	mkdir build''' +lambda+ '''
 			                        	cd build''' +lambda+ '''
 			                        	touch ''' +lambda+ '''$i
 			                        	cd ..
