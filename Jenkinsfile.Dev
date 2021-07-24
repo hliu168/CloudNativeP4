@@ -75,6 +75,7 @@ pipeline {
 							}                 		
 	                 	}
 	                 	parallel steps
+	                 	sh 'tree'
                     }               
                 }
             }
