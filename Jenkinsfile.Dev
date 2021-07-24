@@ -59,7 +59,7 @@ pipeline {
 	                 	lambdasList.each {lambda->
 							steps[lambda] = {
 								sh '''#!/bin/bash
-			                        set -eu
+			                        set -euo pipefail
 			                        
 			                        npm -v
 			                        
@@ -75,8 +75,16 @@ pipeline {
 							}                 		
 	                 	}
 	                 	parallel steps
-	                 	sh 'find -s .'
                     }               
+                    
+                    for (lambda in lambdasList) {
+                    	sh '''#!/bin/bash
+                    		set -euo pipefail
+                    		cd build''' +lambda+ '''
+                    		ls -alt
+                    		cd ..
+                    	'''
+                    }
                 }
             }
         }
