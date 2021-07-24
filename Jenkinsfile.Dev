@@ -81,7 +81,8 @@ pipeline {
                     	sh '''#!/bin/bash
                     		set -euo pipefail
                     		cd build''' +lambda+ '''
-                    		ls -alt
+                    		pwd
+                    		ls -altrh
                     		cd ..
                     	'''
                     }
