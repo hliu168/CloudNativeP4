@@ -6,7 +6,8 @@ pipeline {
     }
     parameters {
         booleanParam(name: 'DEPLOY', defaultValue: true, description: '')
-        extendedChoice(defaultValue: 'Lambda1,Lambda2', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: 'Lambda1,  Lambda2, Lambda3,Lambda4,Lambda5,Lambda6,Lambda7,Lambda8,Lambda9,Lambda10, Lambda11', visibleItemCount: 20)
+        string(name: 'BRANCH_PORTAL_CLIENT', defaultValue: 'origin/integration', description: '')
+        extendedChoice(defaultValue: '-ALL-', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: '-ALL-,LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20', visibleItemCount: 20)
     }
     stages {
         stage("Prepare Workspace") {
@@ -51,6 +52,15 @@ pipeline {
                         set -eu
                         
                         npm -v
+                        IFS=',' read -r -a ITEMS <<< $LAMBDAS
+                        for item in ${ITEMS[@]}
+                        do
+                            if [ $item == "-ALL-" ]
+                            then
+                                LAMBDAS='LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20'
+                                break
+                            fi
+                        done
                         IFS=',' read -r -a LAMB_ARRAY <<< $LAMBDAS
                         # A_Command_supposed_to_fail
                         echo $LAMBDAS
@@ -94,16 +104,26 @@ pipeline {
     post {
         success {
             script {
-                def lambdas = "${LAMBDAS}".split(",")
-                lambdas.each {l->
-                    echo "$l"
-                }
+//                 def lambdas = "${LAMBDAS}".split(",")
+//                 def artifactList = []
+//                 lambdas.each {l->
+//                     echo "$l"
+//                     def artifactName = sh(script: "cat $l/package.json | jq -r '.name'", returnStdout: true)
+//                     echo "$artifactName"
+//                     artifactList.add(artifactName.trim())
+//                 }
+                
+//                 def artifactString = artifactList.join(",")
+//                 echo "$artifactString"
+
+                def APP_BASE_VER = env.APP_BASE_VER
+                build job: 'DownStreamJob', parameters: [
+                    string(name: 'BRANCH_PORTAL_CLIENT', value: params.BRANCH_PORTAL_CLIENT),
+                    string(name: 'AGENT_VERSION', value: "${APP_BASE_VER}.${BUILD_NUMBER}"),
+                    string(name: 'PORTAL_ENV', value: 'integ'),
+                    string(name: 'ARTIFACT_LIST', value: "$LAMBDAS")
+                ], wait: false
             }
-            build job: 'DownStreamJob', parameters: [
-                string(name: 'BRANCH_PORTAL_CLIENT', value: 'origin/integration'),
-                string(name: 'AGENT_VERSION', value: '4.4.1932'),
-                string(name: 'PORTAL_ENV', value: 'integ')
-            ], wait: false
         }
         failure {
             echo "++++++++++++++++++++++++Failure in Build++++++++++++++++++++++++"
