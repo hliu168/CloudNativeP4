@@ -46,7 +46,7 @@ pipeline {
         stage("Prepare Workspace") {
             steps {
                 script {
-                    echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+                    echo "DEPLOY: ${ENV_DEPLOY} -- BRANCH_PORTAL_CLIENT: ${ENV_BRANCH} -- LAMBDAS: ${ENV_LAMBDAS}"
                     cleanWs()
                     deleteDir()
                     checkout scm
