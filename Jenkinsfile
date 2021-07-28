@@ -1,9 +1,20 @@
 pipeline {
     agent any
     
-    node{
-        echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
-    }
+//     node{
+//         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+//     }
+    
+    
+//     stages {
+//         stage("Pre-Start") {
+//             steps {
+//                 script {
+//                     echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+//                 }
+//             }
+//         }
+//     }
     
     options { 
         timestamps()
