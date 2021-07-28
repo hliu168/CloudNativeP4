@@ -19,6 +19,9 @@ pipeline {
 //     script {
 //         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
 //     }
+
+    echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+
     
     options { 
         timestamps()
