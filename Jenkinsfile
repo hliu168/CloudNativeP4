@@ -22,7 +22,11 @@ pipeline {
 
 //     echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
 
-    
+    environment {
+        ENV_DEPLOY = "${sh(script:'echo ${params.DEPLOY}', returnStdout: true).trim()}"
+        ENV_BRANCH = "${sh(script:'echo ${params.BRANCH_PORTAL_CLIENT}', returnStdout: true).trim()}"
+        ENV_LAMBDAS = "${sh(script:'echo ${params.LAMBDAS}', returnStdout: true).trim()}"
+    }
     options { 
         timestamps()
         ansiColor('xterm')
@@ -42,6 +46,7 @@ pipeline {
         stage("Prepare Workspace") {
             steps {
                 script {
+                    echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
                     cleanWs()
                     deleteDir()
                     checkout scm
