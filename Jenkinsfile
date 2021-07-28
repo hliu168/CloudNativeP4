@@ -1,23 +1,5 @@
 pipeline {
     agent any
-    
-    
-//     stages {
-//         stage("Pre-Start") {
-//             steps {
-//                 script {
-//                     echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
-//                 }
-//             }
-//         }
-//     }
-    
-//     script {
-//         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
-//     }
-
-//     echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
-
     environment {
         ENV_DEPLOY = sh(script:"echo -n ${params.DEPLOY}", returnStdout: true)
         ENV_BRANCH = sh(script:"echo -n ${params.BRANCH_PORTAL_CLIENT}", returnStdout: true)
