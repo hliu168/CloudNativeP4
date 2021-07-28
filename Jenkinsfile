@@ -10,10 +10,6 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
-//         script {
-//             echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
-//         }
-        
 //         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
         string(name: 'GIT_BRANCH', defaultValue: 'origin/integration', description: '')
         booleanParam(name: 'DEPLOY', defaultValue: params.DEPLOY ?:false, description: '')
