@@ -19,6 +19,7 @@ pipeline {
         stage("Prepare Workspace") {
             steps {
                 script {
+                    echo "Hello Pipeline"
                     echo "DEPLOY: ${ENV_DEPLOY} -- BRANCH_PORTAL_CLIENT: ${ENV_BRANCH} -- LAMBDAS: ${ENV_LAMBDAS}"
                     cleanWs()
                     deleteDir()
