@@ -31,7 +31,8 @@ pipeline {
 //         script {
 //             echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
 //         }
-        echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+        
+//         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
 
         booleanParam(name: 'DEPLOY', defaultValue: params.DEPLOY ?:false, description: '')
         string(name: 'BRANCH_PORTAL_CLIENT', defaultValue: params.BRANCH_PORTAL_CLIENT ?:'origin/integration', description: '')
