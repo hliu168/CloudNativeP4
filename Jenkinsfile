@@ -5,7 +5,7 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
-        booleanParam(name: 'DEPLOY', defaultValue: params.DEPLOY ?:true, description: '')
+        booleanParam(name: 'DEPLOY', defaultValue: false, description: '')
         string(name: 'BRANCH_PORTAL_CLIENT', defaultValue: params.BRANCH_PORTAL_CLIENT ?:'origin/integration', description: '')
         extendedChoice(defaultValue: params.LAMBDAS ?:'-ALL-', description: 'ListOfLambdas', multiSelectDelimiter: ',', name: 'LAMBDAS', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_MULTI_SELECT', value: '-ALL-,LambdaFolder1,LambdaFolder2,LambdaFolder3,LambdaFolder4,LambdaFolder5,LambdaFolder6,LambdaFolder7,LambdaFolder8,LambdaFolder9,LambdaFolder10,LambdaFolder11,LambdaFolder12,LambdaFolder13,LambdaFolder14,LambdaFolder15,LambdaFolder16,LambdaFolder17,LambdaFolder18,LambdaFolder19,LambdaFolder20', visibleItemCount: 20)
     }
