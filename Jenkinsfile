@@ -50,25 +50,25 @@ pipeline {
                     def buildNumber = "${APP_BASE_VER}.${BUILD_NUMBER}"
                     currentBuild.displayName = "TestPipeline (${buildNumber})"
                   
-                    def repoInfo = [
-                    //    "/"		:	[ 'url': 'https://github.com/hliu168/CloudNativeP4.git', 'branch': "master" ],
-                        "web"   :   [ 'url': 'https://github.com/hliu168/web.git',  'branch': "master"] 
-                    ]
+//                     def repoInfo = [
+//                     //    "/"		:	[ 'url': 'https://github.com/hliu168/CloudNativeP4.git', 'branch': "master" ],
+//                         "web"   :   [ 'url': 'https://github.com/hliu168/web.git',  'branch': "master"] 
+//                     ]
                     
-                    def stepsForParallel = [:]
-                    repoInfo.each { repoName, repoUrl ->
-                        stepsForParallel[repoName] = { ->
-                            dir("${repoName}") {
-                                checkout([$class: 'GitSCM',
-                                          branches: [[name: repoUrl['branch'] ]],
-                                          //extensions: [[$class: 'LocalBranch', localBranch: "**"]],
-                                          userRemoteConfigs: [[ /*credentialsId: "${credScm}", */url: repoUrl['url']]]])
-                            }
-                        }
-                        echo "${repoUrl} checked out to ${WORKSPACE}/${repoName}/ "
-                    }
-                    // Run all checkoutsin parallel
-                    parallel stepsForParallel
+//                     def stepsForParallel = [:]
+//                     repoInfo.each { repoName, repoUrl ->
+//                         stepsForParallel[repoName] = { ->
+//                             dir("${repoName}") {
+//                                 checkout([$class: 'GitSCM',
+//                                           branches: [[name: repoUrl['branch'] ]],
+//                                           //extensions: [[$class: 'LocalBranch', localBranch: "**"]],
+//                                           userRemoteConfigs: [[ /*credentialsId: "${credScm}", */url: repoUrl['url']]]])
+//                             }
+//                         }
+//                         echo "${repoUrl} checked out to ${WORKSPACE}/${repoName}/ "
+//                     }
+//                     // Run all checkoutsin parallel
+//                     parallel stepsForParallel
                 }
             }
         }
