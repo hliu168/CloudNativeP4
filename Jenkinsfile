@@ -10,7 +10,7 @@ pipeline {
         ansiColor('xterm')
     }
     parameters {
-//         echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
+//      echo "params.DEPLOY: ${params.DEPLOY} -- params.BRANCH_PORTAL_CLIENT: ${params.BRANCH_PORTAL_CLIENT} -- params.LAMBDAS: ${params.LAMBDAS}"
         string(name: 'GIT_BRANCH', defaultValue: 'origin/integration', description: '')
         booleanParam(name: 'DEPLOY', defaultValue: params.DEPLOY ?:false, description: '')
         string(name: 'BRANCH_PORTAL_CLIENT', defaultValue: params.BRANCH_PORTAL_CLIENT ?:'origin/integration', description: '')
@@ -20,6 +20,7 @@ pipeline {
         stage("Prepare Workspace") {
             steps {
                 script {
+                    echo "Hello Pipeline"
                     echo "DEPLOY: ${ENV_DEPLOY} -- BRANCH_PORTAL_CLIENT: ${ENV_BRANCH} -- LAMBDAS: ${ENV_LAMBDAS}"
                     cleanWs()
                     deleteDir()
@@ -28,25 +29,6 @@ pipeline {
                     def buildNumber = "${APP_BASE_VER}.${BUILD_NUMBER}"
                     currentBuild.displayName = "TestPipeline (${buildNumber})"
                   
-//                     def repoInfo = [
-//                     //    "/"		:	[ 'url': 'https://github.com/hliu168/CloudNativeP4.git', 'branch': "master" ],
-//                         "web"   :   [ 'url': 'https://github.com/hliu168/web.git',  'branch': "master"] 
-//                     ]
-                    
-//                     def stepsForParallel = [:]
-//                     repoInfo.each { repoName, repoUrl ->
-//                         stepsForParallel[repoName] = { ->
-//                             dir("${repoName}") {
-//                                 checkout([$class: 'GitSCM',
-//                                           branches: [[name: repoUrl['branch'] ]],
-//                                           //extensions: [[$class: 'LocalBranch', localBranch: "**"]],
-//                                           userRemoteConfigs: [[ /*credentialsId: "${credScm}", */url: repoUrl['url']]]])
-//                             }
-//                         }
-//                         echo "${repoUrl} checked out to ${WORKSPACE}/${repoName}/ "
-//                     }
-//                     // Run all checkoutsin parallel
-//                     parallel stepsForParallel
                 }
             }
         }
