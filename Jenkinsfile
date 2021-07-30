@@ -39,7 +39,11 @@ pipeline {
 
                         sh '''#!/bin/bash
                         set -eu
-                        
+                        ls_folders() {
+                            PATTERN=$1
+                            RET=$(ls | grep "$PATTERN")
+                            echo $RET
+                        }
                         npm -v
                         IFS=',' read -r -a ITEMS <<< $LAMBDAS
                         for item in ${ITEMS[@]}
@@ -58,6 +62,7 @@ pipeline {
                             # A_Command_supposed_to_fail
                             echo $lambda
                         done
+                        ls_folders LambdaFolder1
                         '''
                         sh "echo 'SUCCESS' > build_status"
                     }
