@@ -71,6 +71,9 @@ pipeline {
                     def ret = sh(script: "cat package.json | jq -r '.name'", returnStdout: true)
                     echo "${ret}"
                 }
+                
+                sh "find . -type d -name 'LambdaFolder*' | xargs rm -rf"
+                sh "ls -alh"
                     // }
                     // catch (Exception e) {
                     //     sh "echo 'FAILURE' > build_status"
